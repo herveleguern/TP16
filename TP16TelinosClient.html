@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<!-- source  https://www.w3schools.com/xml/tryit.asp?filename=tryajax_xml2  -->
+<html>
+  <body>
+    <h1>TELINOS AJAX</h1>
+    <button type="button" onclick="loadDoc()">Voir les messages</button>
+
+    <table id="demo" border="1"></table>
+    <script>
+      //code JAVASCRIPT
+      function loadDoc() {
+        //AJAX 1 : un objet XHR (XmlHttpRequest) qui représente une requête HTTP
+        var xhttp = new XMLHttpRequest()
+        //AJAX 2 : méthode, URL et synchrone(False)/asynchrone(True)
+        // URL à adapter à votre contexte
+        xhttp.open(
+          'GET',
+          'http://localhost:8888/Bloc2Developpement/TP16TelinosServeurCorrige.php',
+          true,
+        )
+        //AJAX 3 : envoyer la requete
+        xhttp.send()
+        //AJAX 4 : indiquer quoi faire quand on recoit la réponse (readyState 4) correcte (http status 200)
+        xhttp.onreadystatechange = function () {
+          if (this.readyState == 4 && this.status == 200) {
+            myFunction(this)
+          }
+        }
+      }
+      function myFunction(xml) {
+        var xmlDoc = xml.responseXML //un seul message
+        var lesDiffusions = xmlDoc.getElementsByTagName('diffusion')
+        //console.log(lesDiffusions.length) pour afficher  le nombre de diffusions
+        var table =
+          '<tr><th>Code</th><th>Description</th><th>Duree</th><th>Nb de diffusions</th></tr>'
+        //completer le tableau HTML
+        document.getElementById('demo').innerHTML = table
+      }
+    </script>
+  </body>
+</html>
